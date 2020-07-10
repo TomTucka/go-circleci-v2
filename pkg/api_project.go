@@ -1,4 +1,3 @@
-
 /*
  * CircleCI API
  *
@@ -11,11 +10,13 @@ package swagger
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"fmt"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -24,26 +25,27 @@ var (
 )
 
 type ProjectApiService service
+
 /*
 ProjectApiService Create a new checkout key
 Creates a new checkout key. This API request is only usable with a user API token.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectSlug Project slug in the form &#x60;vcs-slug/org-name/repo-name&#x60;. The &#x60;/&#x60; characters may be URL-escaped.
  * @param optional nil or *ProjectApiCreateCheckoutKeyOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of CheckoutKeyInput) - 
+     * @param "Body" (optional.Interface of CheckoutKeyInput) -
 @return CheckoutKey
 */
 
-type ProjectApiCreateCheckoutKeyOpts struct { 
+type ProjectApiCreateCheckoutKeyOpts struct {
 	Body optional.Interface
 }
 
 func (a *ProjectApiService) CreateCheckoutKey(ctx context.Context, projectSlug string, localVarOptionals *ProjectApiCreateCheckoutKeyOpts) (CheckoutKey, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Post")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue CheckoutKey
 	)
 
@@ -74,8 +76,8 @@ func (a *ProjectApiService) CreateCheckoutKey(ctx context.Context, projectSlug s
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
+
+		localVarOptionalBody := localVarOptionals.Body.Value()
 		localVarPostBody = &localVarOptionalBody
 	}
 	if ctx != nil {
@@ -88,7 +90,7 @@ func (a *ProjectApiService) CreateCheckoutKey(ctx context.Context, projectSlug s
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -100,7 +102,7 @@ func (a *ProjectApiService) CreateCheckoutKey(ctx context.Context, projectSlug s
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -122,52 +124,53 @@ func (a *ProjectApiService) CreateCheckoutKey(ctx context.Context, projectSlug s
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 201 {
 			var v CheckoutKey
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 ProjectApiService Create an environment variable
 Creates a new environment variable.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectSlug Project slug in the form &#x60;vcs-slug/org-name/repo-name&#x60;. The &#x60;/&#x60; characters may be URL-escaped.
  * @param optional nil or *ProjectApiCreateEnvVarOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of EnvironmentVariablePair) - 
+     * @param "Body" (optional.Interface of EnvironmentVariablePair) -
 @return EnvironmentVariablePair
 */
 
-type ProjectApiCreateEnvVarOpts struct { 
+type ProjectApiCreateEnvVarOpts struct {
 	Body optional.Interface
 }
 
 func (a *ProjectApiService) CreateEnvVar(ctx context.Context, projectSlug string, localVarOptionals *ProjectApiCreateEnvVarOpts) (EnvironmentVariablePair, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Post")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue EnvironmentVariablePair
 	)
 
@@ -198,8 +201,8 @@ func (a *ProjectApiService) CreateEnvVar(ctx context.Context, projectSlug string
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
+
+		localVarOptionalBody := localVarOptionals.Body.Value()
 		localVarPostBody = &localVarOptionalBody
 	}
 	if ctx != nil {
@@ -212,7 +215,7 @@ func (a *ProjectApiService) CreateEnvVar(ctx context.Context, projectSlug string
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -224,7 +227,7 @@ func (a *ProjectApiService) CreateEnvVar(ctx context.Context, projectSlug string
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -246,32 +249,33 @@ func (a *ProjectApiService) CreateEnvVar(ctx context.Context, projectSlug string
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 201 {
 			var v EnvironmentVariablePair
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 ProjectApiService Delete a checkout key
 Deletes the checkout key.
@@ -282,10 +286,10 @@ Deletes the checkout key.
 */
 func (a *ProjectApiService) DeleteCheckoutKey(ctx context.Context, projectSlug string, fingerprint string) (MessageResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Delete")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue MessageResponse
 	)
 
@@ -325,7 +329,7 @@ func (a *ProjectApiService) DeleteCheckoutKey(ctx context.Context, projectSlug s
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -337,7 +341,7 @@ func (a *ProjectApiService) DeleteCheckoutKey(ctx context.Context, projectSlug s
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -359,32 +363,33 @@ func (a *ProjectApiService) DeleteCheckoutKey(ctx context.Context, projectSlug s
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v MessageResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 ProjectApiService Delete an environment variable
 Deletes the environment variable named :name.
@@ -395,10 +400,10 @@ Deletes the environment variable named :name.
 */
 func (a *ProjectApiService) DeleteEnvVar(ctx context.Context, projectSlug string, name string) (MessageResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Delete")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue MessageResponse
 	)
 
@@ -438,7 +443,7 @@ func (a *ProjectApiService) DeleteEnvVar(ctx context.Context, projectSlug string
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -450,7 +455,7 @@ func (a *ProjectApiService) DeleteEnvVar(ctx context.Context, projectSlug string
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -472,32 +477,33 @@ func (a *ProjectApiService) DeleteEnvVar(ctx context.Context, projectSlug string
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v MessageResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 ProjectApiService Get a checkout key
 Returns an individual checkout key.
@@ -508,10 +514,10 @@ Returns an individual checkout key.
 */
 func (a *ProjectApiService) GetCheckoutKey(ctx context.Context, projectSlug string, fingerprint string) (CheckoutKey, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue CheckoutKey
 	)
 
@@ -551,7 +557,7 @@ func (a *ProjectApiService) GetCheckoutKey(ctx context.Context, projectSlug stri
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -563,7 +569,7 @@ func (a *ProjectApiService) GetCheckoutKey(ctx context.Context, projectSlug stri
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -585,32 +591,33 @@ func (a *ProjectApiService) GetCheckoutKey(ctx context.Context, projectSlug stri
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v CheckoutKey
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 ProjectApiService Get a masked environment variable
 Returns the masked value of environment variable :name.
@@ -621,10 +628,10 @@ Returns the masked value of environment variable :name.
 */
 func (a *ProjectApiService) GetEnvVar(ctx context.Context, projectSlug string, name string) (EnvironmentVariablePair, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue EnvironmentVariablePair
 	)
 
@@ -664,7 +671,7 @@ func (a *ProjectApiService) GetEnvVar(ctx context.Context, projectSlug string, n
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -676,7 +683,7 @@ func (a *ProjectApiService) GetEnvVar(ctx context.Context, projectSlug string, n
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -698,32 +705,33 @@ func (a *ProjectApiService) GetEnvVar(ctx context.Context, projectSlug string, n
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v EnvironmentVariablePair
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 ProjectApiService Get a project
 Retrieves a project by project slug.
@@ -733,10 +741,10 @@ Retrieves a project by project slug.
 */
 func (a *ProjectApiService) GetProjectBySlug(ctx context.Context, projectSlug string) (Project, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue Project
 	)
 
@@ -775,7 +783,7 @@ func (a *ProjectApiService) GetProjectBySlug(ctx context.Context, projectSlug st
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -787,7 +795,7 @@ func (a *ProjectApiService) GetProjectBySlug(ctx context.Context, projectSlug st
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -809,32 +817,33 @@ func (a *ProjectApiService) GetProjectBySlug(ctx context.Context, projectSlug st
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v Project
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 ProjectApiService Get all checkout keys
 Returns a sequence of checkout keys for &#x60;:project&#x60;.
@@ -844,10 +853,10 @@ Returns a sequence of checkout keys for &#x60;:project&#x60;.
 */
 func (a *ProjectApiService) ListCheckoutKeys(ctx context.Context, projectSlug string) (CheckoutKeyListResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue CheckoutKeyListResponse
 	)
 
@@ -886,7 +895,7 @@ func (a *ProjectApiService) ListCheckoutKeys(ctx context.Context, projectSlug st
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -898,7 +907,7 @@ func (a *ProjectApiService) ListCheckoutKeys(ctx context.Context, projectSlug st
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -920,32 +929,33 @@ func (a *ProjectApiService) ListCheckoutKeys(ctx context.Context, projectSlug st
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v CheckoutKeyListResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 ProjectApiService List all environment variables
 Returns four &#x27;x&#x27; characters, in addition to the last four ASCII characters of the value, consistent with the display of environment variable values on the CircleCI website.
@@ -955,10 +965,10 @@ Returns four &#x27;x&#x27; characters, in addition to the last four ASCII charac
 */
 func (a *ProjectApiService) ListEnvVars(ctx context.Context, projectSlug string) (EnvironmentVariableListResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue EnvironmentVariableListResponse
 	)
 
@@ -997,7 +1007,7 @@ func (a *ProjectApiService) ListEnvVars(ctx context.Context, projectSlug string)
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -1009,7 +1019,7 @@ func (a *ProjectApiService) ListEnvVars(ctx context.Context, projectSlug string)
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -1031,26 +1041,26 @@ func (a *ProjectApiService) ListEnvVars(ctx context.Context, projectSlug string)
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v EnvironmentVariableListResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}

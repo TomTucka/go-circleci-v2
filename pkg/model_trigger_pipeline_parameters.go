@@ -15,5 +15,5 @@ type TriggerPipelineParameters struct {
 	// The tag used by the pipeline. The commit that this tag points to was used for the pipeline. Note that `branch` and `tag` are mutually exclusive.
 	Tag string `json:"tag,omitempty"`
 	// An object containing pipeline parameters and their values.
-	Parameters map[string]Object `json:"parameters,omitempty"`
+	Parameters map[string]string `json:"parameters,omitempty"`
 }

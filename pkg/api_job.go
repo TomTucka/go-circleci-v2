@@ -1,4 +1,3 @@
-
 /*
  * CircleCI API
  *
@@ -11,11 +10,11 @@ package swagger
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"fmt"
 )
 
 // Linger please
@@ -24,6 +23,7 @@ var (
 )
 
 type JobApiService service
+
 /*
 JobApiService Cancel job
 Cancel job with a given job number.
@@ -32,12 +32,12 @@ Cancel job with a given job number.
  * @param projectSlug Project slug in the form &#x60;vcs-slug/org-name/repo-name&#x60;. The &#x60;/&#x60; characters may be URL-escaped.
 @return MessageResponse
 */
-func (a *JobApiService) CancelJob(ctx context.Context, jobNumber Object, projectSlug string) (MessageResponse, *http.Response, error) {
+func (a *JobApiService) CancelJob(ctx context.Context, jobNumber string, projectSlug string) (MessageResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Post")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue MessageResponse
 	)
 
@@ -77,7 +77,7 @@ func (a *JobApiService) CancelJob(ctx context.Context, jobNumber Object, project
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -89,7 +89,7 @@ func (a *JobApiService) CancelJob(ctx context.Context, jobNumber Object, project
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -111,32 +111,33 @@ func (a *JobApiService) CancelJob(ctx context.Context, jobNumber Object, project
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 202 {
 			var v MessageResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 JobApiService Get a job&#x27;s artifacts
 Returns a job&#x27;s artifacts.
@@ -145,12 +146,12 @@ Returns a job&#x27;s artifacts.
  * @param projectSlug Project slug in the form &#x60;vcs-slug/org-name/repo-name&#x60;. The &#x60;/&#x60; characters may be URL-escaped.
 @return ArtifactListResponse
 */
-func (a *JobApiService) GetJobArtifacts(ctx context.Context, jobNumber Object, projectSlug string) (ArtifactListResponse, *http.Response, error) {
+func (a *JobApiService) GetJobArtifacts(ctx context.Context, jobNumber string, projectSlug string) (ArtifactListResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue ArtifactListResponse
 	)
 
@@ -190,7 +191,7 @@ func (a *JobApiService) GetJobArtifacts(ctx context.Context, jobNumber Object, p
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -202,7 +203,7 @@ func (a *JobApiService) GetJobArtifacts(ctx context.Context, jobNumber Object, p
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -224,32 +225,33 @@ func (a *JobApiService) GetJobArtifacts(ctx context.Context, jobNumber Object, p
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v ArtifactListResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 JobApiService Get job details
 Returns job details.
@@ -258,12 +260,12 @@ Returns job details.
  * @param projectSlug Project slug in the form &#x60;vcs-slug/org-name/repo-name&#x60;. The &#x60;/&#x60; characters may be URL-escaped.
 @return JobDetails
 */
-func (a *JobApiService) GetJobDetails(ctx context.Context, jobNumber Object, projectSlug string) (JobDetails, *http.Response, error) {
+func (a *JobApiService) GetJobDetails(ctx context.Context, jobNumber string, projectSlug string) (JobDetails, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue JobDetails
 	)
 
@@ -303,7 +305,7 @@ func (a *JobApiService) GetJobDetails(ctx context.Context, jobNumber Object, pro
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -315,7 +317,7 @@ func (a *JobApiService) GetJobDetails(ctx context.Context, jobNumber Object, pro
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -337,32 +339,33 @@ func (a *JobApiService) GetJobDetails(ctx context.Context, jobNumber Object, pro
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v JobDetails
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
 /*
 JobApiService Get test metadata
 Get test metadata for a build.
@@ -371,12 +374,12 @@ Get test metadata for a build.
  * @param projectSlug Project slug in the form &#x60;vcs-slug/org-name/repo-name&#x60;. The &#x60;/&#x60; characters may be URL-escaped.
 @return TestsResponse
 */
-func (a *JobApiService) GetTests(ctx context.Context, jobNumber Object, projectSlug string) (TestsResponse, *http.Response, error) {
+func (a *JobApiService) GetTests(ctx context.Context, jobNumber string, projectSlug string) (TestsResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue TestsResponse
 	)
 
@@ -416,7 +419,7 @@ func (a *JobApiService) GetTests(ctx context.Context, jobNumber Object, projectS
 				key = auth.Key
 			}
 			localVarHeaderParams["Circle-Token"] = key
-			
+
 		}
 	}
 	if ctx != nil {
@@ -428,7 +431,7 @@ func (a *JobApiService) GetTests(ctx context.Context, jobNumber Object, projectS
 			} else {
 				key = auth.Key
 			}
-			
+
 			localVarQueryParams.Add("circle-token", key)
 		}
 	}
@@ -450,26 +453,26 @@ func (a *JobApiService) GetTests(ctx context.Context, jobNumber Object, projectS
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
 			return localVarReturnValue, localVarHttpResponse, err
 		}
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v TestsResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
